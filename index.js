@@ -25,13 +25,13 @@ function init() {
       choices: [
         "Add a department",
         "Add a role",
-        "Add a employee",
+        "Add an employee",
         "View all departments",
         "View all roles",
         "View all employees",
         "Update a department",
         "Update a role",
-        "Update a employee",
+        "Update an employee",
       ],
     })
     .then(function (answer) {
@@ -78,16 +78,105 @@ function init() {
 // Function to add departments
 function addDepartment() {
   console.log("Add a department");
+
+  // Inquirer prompt to ask for name of new department
+  inquirer
+    .prompt({
+      name: "newDepartment",
+      type: "input",
+      message: "What department would you like to add?",
+    })
+    .then(function (answer) {
+      connection.query(
+        `INSERT INTO department (name) VALUES ("${answer.newDepartment}");`,
+        function (err, data) {
+          // Then connection.query to INSERT INTO department (name) VALUE ("userInput")
+          // Console.table new department table
+          console.log("Department has been added.");
+        }
+      );
+      connection.end();
+    });
 }
 
 // Function to add roles
 function addRole() {
   console.log("Add a role");
+  // Inquirer prompt to ask for title, salary and department id of new role,
+  inquirer
+    .prompt([
+      {
+        name: "newRoleTitle",
+        type: "input",
+        message: "What is the job title for your new role?",
+      },
+      {
+        name: "newRoleSalary",
+        type: "input",
+        message: "What is the salary for your new role?",
+      },
+      {
+        name: "newRoleDepartmentID",
+        type: "input",
+        message: "What is the department ID for your new role?",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        `INSERT INTO role (title, salary, department_id) VALUES ("${answer.newRoleTitle}", "${answer.newRoleSalary}", "${answer.newRoleDepartmentID}");`,
+        function (err, data) {
+          // Then connection.query to INSERT INTO department (name) VALUE ("userInput")
+          // Console.table new department table
+          console.log("Role has been added.");
+        }
+      );
+      connection.end();
+    });
 }
 
 // Function to add employment
 function addEmployee() {
   console.log("Add an employee");
+  // Inquirer prompt to ask for title, salary and department id of new role,
+  inquirer
+    .prompt([
+      {
+        name: "newEmpFirstName",
+        type: "input",
+        message: "What is the new employee's first name?",
+      },
+      {
+        name: "newEmpLastName",
+        type: "input",
+        message: "What is the new employee's last name?",
+      },
+      {
+        name: "newEmpSalary",
+        type: "input",
+        message: "What is the new employee's salary?",
+      },
+      {
+        name: "newEmpRoleID",
+        type: "input",
+        message: "What is the role ID for your new employee?",
+      },
+      {
+        name: "newEmpManagerID",
+        type: "input",
+        message: "What is the manager ID for your new employee?",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        `INSERT INTO employee (first_name, last_name, salary, role_id, manager_id) VALUES ("${answer.newEmpFirstName}", "${answer.newEmpLastName}", "${answer.newEmpSalary}", "${answer.newEmpRoleID}", "${answer.newEmpManagerID}");`,
+        function (err, data) {
+          // Then connection.query to INSERT INTO department (name) VALUE ("userInput")
+          // Console.table new department table
+          console.log("Employee has been added.");
+        }
+      );
+      connection.end();
+    });
 }
 
 // Function to view departments
