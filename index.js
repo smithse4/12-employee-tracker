@@ -26,9 +26,9 @@ function init() {
         "Add a department",
         "Add a role",
         "Add a employee",
-        "View a department",
-        "View a role",
-        "View a employee",
+        "View all departments",
+        "View all roles",
+        "View all employees",
         "Update a department",
         "Update a role",
         "Update a employee",
@@ -76,46 +76,95 @@ function init() {
 }
 
 // Function to add departments
-function addDepartment(){
-    console.log("Add a department")
-};
+function addDepartment() {
+  console.log("Add a department");
+}
 
 // Function to add roles
-function addRole(){
-    console.log("Add a role")
-};
+function addRole() {
+  console.log("Add a role");
+}
 
 // Function to add employment
-function addEmployee(){
-    console.log("Add an employee")
-};
+function addEmployee() {
+  console.log("Add an employee");
+}
 
 // Function to view departments
-function viewDepartments(){
-    console.log("Viewing all departments")
-};
+function viewDepartments() {
+  console.log("Viewing all departments");
+  connection.query("SELECT * FROM department;", function (err, data) {
+    // console.log("All departments");
+    // console.log("================");
+    // for (let i = 0; i < data.length; i++) {
+    //   console.log("ID: " + data[i].id + " || Department: " + data[i].name);
+    // }
+    console.table(data);
+  });
+  connection.end();
+}
 
 // Function to view roles
-function viewRoles(){
-    console.log("Viewing all roles")
-};
+function viewRoles() {
+  console.log("Viewing all roles");
+  connection.query("SELECT * FROM role;", function (err, data) {
+    // console.log("All roles");
+    // console.log("================");
+    // for (let i = 0; i < data.length; i++) {
+    //   console.log(
+    //     "ID: " +
+    //       data[i].id +
+    //       " || Title: " +
+    //       data[i].title +
+    //       " || Salary: " +
+    //       data[i].salary +
+    //       " || Department ID: " +
+    //       data[i].department_id
+    //   );
+    // }
+    console.table(data);
+  });
+  connection.end();
+}
 
 // Function to view employment
-function viewEmployees(){
-    console.log("Viewing all employees")
-};
+function viewEmployees() {
+  console.log("Viewing all employees");
+  connection.query("SELECT * FROM employee;", function (err, data) {
+    // console.log("All employees");
+    // console.log("================");
+    // for (let i = 0; i < data.length; i++) {
+    //   console.log(
+    //     "ID: " +
+    //       data[i].id +
+    //       " || Name: " +
+    //       data[i].first_name +
+    //       " " +
+    //       data[i].last_name +
+    //       " || Title: " +
+    //       data[i].title +
+    //       " || Salary: " +
+    //       data[i].salary +
+    //       " || Department ID: " +
+    //       data[i].department_id
+    //   );
+    // }
+    console.table(data);
+  });
+  connection.end();
+}
 
 // Function to update departments
-function updateDepartment(){
-    console.log("Update a department")
-};
+function updateDepartment() {
+  console.log("Update a department");
+}
 
 // Function to update role
-function updateRole(){
-    console.log("Update a role")
-};
+function updateRole() {
+  console.log("Update a role");
+}
 
 // Function to update employment
-function updateEmployee(){
-    console.log("Update an employee")
-};
+function updateEmployee() {
+  console.log("Update an employee");
+}
