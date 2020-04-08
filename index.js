@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Mama90Kay",
+  password: "",
   database: "employee_tracker_db",
 });
 
@@ -182,16 +182,16 @@ function viewDepartments() {
 // Function to view roles
 function viewRoles() {
   console.log("Viewing all roles");
-  connection.query("SELECT * FROM role;", function (err, data) {
+  connection.query("SELECT role.id, title, salary, name FROM role INNER JOIN department ON role.department_id=department.id;", function (err, data) {
     console.table(data);
   });
   connection.end();
 }
 
-// Function to view employment
+// Function to view employmees
 function viewEmployees() {
   console.log("Viewing all employees");
-  connection.query("SELECT * FROM employee;", function (err, data) {
+  connection.query("SELECT employee.id, first_name, last_name, employee.salary, title, name FROM employee INNER JOIN role on employee.role_id=role.id INNER JOIN department ON role.department_id=department.id;", function (err, data) {
     console.table(data);
   });
   connection.end();
