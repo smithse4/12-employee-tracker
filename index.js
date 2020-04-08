@@ -29,9 +29,7 @@ function init() {
         "View all departments",
         "View all roles",
         "View all employees",
-        "Update a department",
-        "Update a role",
-        "Update an employee",
+        "Update an employee role",
       ],
     })
     .then(function (answer) {
@@ -51,8 +49,7 @@ function init() {
         case "View all departments":
           viewDepartments();
           break;
-
-        case "View all roles":
+         case "View all roles":
           viewRoles();
           break;
 
@@ -60,16 +57,8 @@ function init() {
           viewEmployees();
           break;
 
-        case "Update a department":
-          updateDepartment();
-          break;
-
-        case "Update a role":
-          updateRole();
-          break;
-
-        case "Update an employee":
-          updateEmployee();
+        case "Update an employee role":
+          updateEmployeeRole();
           break;
       }
     });
@@ -93,6 +82,7 @@ function addDepartment() {
           // Then connection.query to INSERT INTO department (name) VALUE ("userInput")
           // Console.table new department table
           console.log("Department has been added.");
+        //   console.table(data);
         }
       );
       connection.end();
@@ -112,12 +102,13 @@ function addRole() {
       },
       {
         name: "newRoleSalary",
-        type: "input",
+        type: "number",
         message: "What is the salary for your new role?",
       },
       {
+          // NEEDS TO BE UPDATED TO INCLUDE LIST OF DEPARTMENTS
         name: "newRoleDepartmentID",
-        type: "input",
+        type: "number",
         message: "What is the department ID for your new role?",
       },
     ])
@@ -152,17 +143,17 @@ function addEmployee() {
       },
       {
         name: "newEmpSalary",
-        type: "input",
+        type: "number",
         message: "What is the new employee's salary?",
       },
       {
         name: "newEmpRoleID",
-        type: "input",
+        type: "number",
         message: "What is the role ID for your new employee?",
       },
       {
         name: "newEmpManagerID",
-        type: "input",
+        type: "number",
         message: "What is the manager ID for your new employee?",
       },
     ])
@@ -183,11 +174,6 @@ function addEmployee() {
 function viewDepartments() {
   console.log("Viewing all departments");
   connection.query("SELECT * FROM department;", function (err, data) {
-    // console.log("All departments");
-    // console.log("================");
-    // for (let i = 0; i < data.length; i++) {
-    //   console.log("ID: " + data[i].id + " || Department: " + data[i].name);
-    // }
     console.table(data);
   });
   connection.end();
@@ -197,20 +183,6 @@ function viewDepartments() {
 function viewRoles() {
   console.log("Viewing all roles");
   connection.query("SELECT * FROM role;", function (err, data) {
-    // console.log("All roles");
-    // console.log("================");
-    // for (let i = 0; i < data.length; i++) {
-    //   console.log(
-    //     "ID: " +
-    //       data[i].id +
-    //       " || Title: " +
-    //       data[i].title +
-    //       " || Salary: " +
-    //       data[i].salary +
-    //       " || Department ID: " +
-    //       data[i].department_id
-    //   );
-    // }
     console.table(data);
   });
   connection.end();
@@ -220,40 +192,63 @@ function viewRoles() {
 function viewEmployees() {
   console.log("Viewing all employees");
   connection.query("SELECT * FROM employee;", function (err, data) {
-    // console.log("All employees");
-    // console.log("================");
-    // for (let i = 0; i < data.length; i++) {
-    //   console.log(
-    //     "ID: " +
-    //       data[i].id +
-    //       " || Name: " +
-    //       data[i].first_name +
-    //       " " +
-    //       data[i].last_name +
-    //       " || Title: " +
-    //       data[i].title +
-    //       " || Salary: " +
-    //       data[i].salary +
-    //       " || Department ID: " +
-    //       data[i].department_id
-    //   );
-    // }
     console.table(data);
   });
   connection.end();
 }
 
-// Function to update departments
-function updateDepartment() {
-  console.log("Update a department");
-}
+// Function to update employee role
+function updateEmployeeRole() {
+  console.log("Update an employee role");
 
-// Function to update role
-function updateRole() {
-  console.log("Update a role");
-}
-
-// Function to update employment
-function updateEmployee() {
-  console.log("Update an employee");
+  // Get a list of employees
+  connection.query("SELECT * FROM employee;", function (err, data) {
+      console.table(data);
+      // display list to user
+        inquirer
+        .prompt([
+          {
+          name: "updateEmployee",
+          type: "input",
+          message: "Enter the id of the employee would you like to update.",
+        },
+        {
+          name: "updateInfo",
+          type: "rawlist",
+          message: "What information would you like to update?",
+          choices: [
+              "first_name",
+              "last_name",
+              "salary",
+              "role_id",
+              "manager_id",
+            ],
+        },
+        {
+            name: "updateInput",
+            type: "input",
+            message: "What is the new value?",
+          }
+      ])
+        .then(function (answer) {
+            // console.log('!!!!!!!!!!!!!!!!!!!!!!', answer);
+            let query = `UPDATE employee SET ${answer.updateInfo} = ${answer.updateInput} WHERE id = ${answer.updateEmployee};`
+            console.log(query)
+          connection.query(
+            query,
+            function (err, data) {
+              // Then connection.query to INSERT INTO department (name) VALUE ("userInput")
+              // Console.table new department table
+              if (err) {
+                  console.log('????????????????', err)
+              } else {
+                  console.log("Employee has been updated.");
+              }
+            //   console.table(data);
+            }
+          );
+    });
+    // connection.end();
+  });
+  
 }
