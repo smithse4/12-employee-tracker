@@ -36,6 +36,14 @@ Build a command-line application that at a minimum allows the user to:
 
   * Update employee roles
 
+## Screenshots
+
+Initial prompt for user's preferred action:
+![Actions](./assets/actions.png)
+
+View all employee information:
+![View Employees](./assets/view-employees.png)
+
 Bonus points if you're able to:
 
   * Update employee managers
@@ -66,7 +74,6 @@ How do you deliver this? Here are some guidelines:
 
 * You will need to perform a variety of SQL JOINS to complete this assignment, and it's recommended you review the week's activities if you need a refresher on this.
 
-![Employee Tracker](Assets/employee-tracker.gif)
 
 ### Hints
 
